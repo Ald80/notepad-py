@@ -1,2 +1,2 @@
 # notepad-py
-Notepad feito em Python
+Editor de Texto feito em python
