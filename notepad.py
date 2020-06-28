@@ -18,8 +18,12 @@ class Notepad:
     __thisEditMenu = Menu(__thisMenuBar, tearoff=0)
     __thisHelpMenu = Menu(__thisMenuBar, tearoff=0)
 
+    __thisTheme = Menu(__thisMenuBar, tearoff=0)
+
     __thisScrollBar = Scrollbar(__thisTextArea)
     __file = None
+    
+    # print(__list)
 
     def __init__(self, **kwargs):
 
@@ -57,7 +61,13 @@ class Notepad:
         self.__thisTextArea.grid(sticky = N + E + S + W)
 
         # background or bg/ foreground or fg/ 
-        self.__thisTextArea.configure(background="#14141f", foreground="white", insertbackground='white')
+        # self.__thisTextArea.configure(background="#14141f", foreground="white", insertbackground='white')
+
+        # self.__list = self.themes_list(0)
+
+        # self.__thisTextArea.configure(background=self.__list['background'], foreground=self.__list['foreground'], insertbackground=self.__list['insertbackground'])
+
+        # self.configure_theme(1)
 
         self.__thisFileMenu.add_command(label = "New", command = self.__newFile)
 
@@ -79,9 +89,22 @@ class Notepad:
 
         self.__thisMenuBar.add_cascade(label = "Edit", menu = self.__thisEditMenu)
 
+
+        # list = self.themes_list(1) 
+        # print(list)
+
         self.__thisHelpMenu.add_command(label = "About Notepad", command = self.__showAbout)
 
         self.__thisMenuBar.add_cascade(label = "Help", menu = self.__thisHelpMenu)
+
+
+        self.__thisTheme.add_command(label = "White", command = self.theme_white)
+
+        self.__thisTheme.add_command(label = "Dark Purple", command = self.theme_dark_purple)
+
+        self.__thisMenuBar.add_cascade(label = "Themes", menu = self.__thisTheme)
+
+
 
         self.__root.config(menu = self.__thisMenuBar)
 
@@ -94,7 +117,7 @@ class Notepad:
         self.__root.destroy()
 
     def __showAbout(self):
-        showinfo("Notepad", "Mrinal Verma")
+        showinfo("Notepad", "This is Python Notepad")
 
     def __openFile(self):
         self.__file = askopenfile(defaultextextension = ".txt", filetype=[("All Files ", "*.*"), ("Text Documents", "*.txt*")])
@@ -148,7 +171,38 @@ class Notepad:
 
     def run(self):
         self.__root.mainloop()          
-        
+
+    def themes_list(self, index):
+        themes = {
+            # Dark Purple
+            0: {
+                'background': '#14141f', 
+                'foreground': '#ffffff',
+                'insertbackground': '#ffffff'
+            },
+            # White
+            1: {
+                'background': '#ffffff', 
+                'foreground': '#000000',
+                'insertbackground': '#000000'
+            }
+        }
+        return themes[index]
+    
+    def configure_theme(self, i):
+        list = self.themes_list(i)
+        print('Entrei aqui')
+        print(list)
+        self.__thisTextArea.configure(background=list['background'], 
+            foreground=list['foreground'], 
+            insertbackground=list['insertbackground'])
+
+    def theme_white(self):
+        self.configure_theme(1)
+    
+    def theme_dark_purple(self):
+        self.configure_theme(0)
+
 
 notepad = Notepad(width=600, height=400)
 notepad.run()
