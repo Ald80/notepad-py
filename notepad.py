@@ -6,6 +6,8 @@ from tkinter.messagebox import *
 
 from tkinter.filedialog import *
 
+import json
+
 class Notepad:
 
     __root = Tk()
@@ -102,8 +104,9 @@ class Notepad:
 
         self.__thisTheme.add_command(label = "Dark Purple", command = self.theme_dark_purple)
 
-        self.__thisMenuBar.add_cascade(label = "Themes", menu = self.__thisTheme)
+        self.__thisTheme.add_command(label = "Dark Pink", command = self.theme_dark_pink)
 
+        self.__thisMenuBar.add_cascade(label = "Themes", menu = self.__thisTheme)
 
 
         self.__root.config(menu = self.__thisMenuBar)
@@ -172,37 +175,43 @@ class Notepad:
     def run(self):
         self.__root.mainloop()          
 
-    def themes_list(self, index):
-        themes = {
-            # Dark Purple
-            0: {
-                'background': '#14141f', 
-                'foreground': '#ffffff',
-                'insertbackground': '#ffffff'
-            },
-            # White
-            1: {
-                'background': '#ffffff', 
-                'foreground': '#000000',
-                'insertbackground': '#000000'
-            }
-        }
-        return themes[index]
+    # def themes_list(self, index):
+    #     themes = {
+    #         # Dark Purple
+    #         0: {
+    #             'background': '#14141f', 
+    #             'foreground': '#ffffff',
+    #             'insertbackground': '#ffffff'
+    #         },
+    #         # White
+    #         1: {
+    #             'background': '#ffffff', 
+    #             'foreground': '#000000',
+    #             'insertbackground': '#000000'
+    #         }
+    #     }
+    #     return themes[index]
     
     def configure_theme(self, i):
-        list = self.themes_list(i)
-        print('Entrei aqui')
-        print(list)
+        list = self.json_test(i)
         self.__thisTextArea.configure(background=list['background'], 
             foreground=list['foreground'], 
             insertbackground=list['insertbackground'])
-
-    def theme_white(self):
-        self.configure_theme(1)
+    
+    def json_test(self, index):
+        with open('themes.json') as json_file:
+            data = json.load(json_file)
+            data = data[str(index)]
+        return data
     
     def theme_dark_purple(self):
         self.configure_theme(0)
 
+    def theme_white(self):
+        self.configure_theme(1)
+    
+    def theme_dark_pink(self):
+        self.configure_theme(2)
 
 notepad = Notepad(width=600, height=400)
 notepad.run()
