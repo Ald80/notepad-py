@@ -24,8 +24,6 @@ class Notepad:
 
     __thisScrollBar = Scrollbar(__thisTextArea)
     __file = None
-    
-    # print(__list)
 
     def __init__(self, **kwargs):
 
@@ -62,15 +60,6 @@ class Notepad:
 
         self.__thisTextArea.grid(sticky = N + E + S + W)
 
-        # background or bg/ foreground or fg/ 
-        # self.__thisTextArea.configure(background="#14141f", foreground="white", insertbackground='white')
-
-        # self.__list = self.themes_list(0)
-
-        # self.__thisTextArea.configure(background=self.__list['background'], foreground=self.__list['foreground'], insertbackground=self.__list['insertbackground'])
-
-        # self.configure_theme(1)
-
         self.__thisFileMenu.add_command(label = "New", command = self.__newFile)
 
         self.__thisFileMenu.add_command(label = "Open", command = self.__openFile)
@@ -91,9 +80,6 @@ class Notepad:
 
         self.__thisMenuBar.add_cascade(label = "Edit", menu = self.__thisEditMenu)
 
-
-        # list = self.themes_list(1) 
-        # print(list)
 
         self.__thisHelpMenu.add_command(label = "About Notepad", command = self.__showAbout)
 
@@ -174,36 +160,19 @@ class Notepad:
 
     def run(self):
         self.__root.mainloop()          
-
-    # def themes_list(self, index):
-    #     themes = {
-    #         # Dark Purple
-    #         0: {
-    #             'background': '#14141f', 
-    #             'foreground': '#ffffff',
-    #             'insertbackground': '#ffffff'
-    #         },
-    #         # White
-    #         1: {
-    #             'background': '#ffffff', 
-    #             'foreground': '#000000',
-    #             'insertbackground': '#000000'
-    #         }
-    #     }
-    #     return themes[index]
     
-    def configure_theme(self, i):
-        list = self.json_test(i)
+    def configure_theme(self, index):
+        list = self.charge_json(index)
         self.__thisTextArea.configure(background=list['background'], 
             foreground=list['foreground'], 
             insertbackground=list['insertbackground'])
     
-    def json_test(self, index):
+    def charge_json(self, index):
         with open('themes.json') as json_file:
             data = json.load(json_file)
             data = data[str(index)]
         return data
-    
+
     def theme_dark_purple(self):
         self.configure_theme(0)
 
