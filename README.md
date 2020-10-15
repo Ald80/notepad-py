@@ -4,4 +4,4 @@
 
 Editor de Texto feito em python
 
-Link para baixar o executavel: https://drive.google.com/drive/folders/1xBoh-qkT9WsGSJBntjl7R9Z4YxiOcXeF
+Link para baixar o executável: https://drive.google.com/drive/folders/1xBoh-qkT9WsGSJBntjl7R9Z4YxiOcXeF
